@@ -3,12 +3,12 @@ import { receiveUsers } from './users'
 import { receivePolls } from './polls'
 import { setAuthedUser } from './authedUser'
 
-cost USER_ID = 'tylermcginnis'
+const USER_ID = 'tylermcginnis'
 //thunk
 export function handleInitialData() {
   return (dispatch) => {
     getInitialData()
-    .then({users, polls} => {
+    .then(({users, polls}) => {
       dispatch(receiveUsers(users))
       dispatch(receivePolls(polls))
       dispatch(setAuthedUser(USER_ID))
