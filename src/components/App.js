@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
+import Dashboard from './Dashboard'
 
 class App extends Component {
 
@@ -10,14 +11,21 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        Starter Code.
+      <div className="container">
+      {this.props.loading === true
+        ? 'loading'
+        : <Dashboard />
+      }
       </div>
     )
   }
 }
 
-
-const ConnectedApp = connect()(App)
+function mapStateToProps({authedUser}){
+  return {
+    loading: authedUser === null
+  }
+}
+const ConnectedApp = connect(mapStateToProps)(App)
 
 export default ConnectedApp
