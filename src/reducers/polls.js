@@ -1,18 +1,31 @@
 import { RECEIVE_POLLS, ADD_POLL } from '../actions/polls'
+import { ADD_ANSWER } from '../actions/answers'
 
-export default function polls( state = {}, action ){
+export default function polls (state = {}, action) {
   switch (action.type) {
-    case RECEIVE_POLLS:
+    case RECEIVE_POLLS :
       return {
         ...state,
-        ...action.polls
+        ...action.polls,
       }
-    case ADD_POLL:
+    case ADD_POLL :
       return {
         ...state,
-        [action.poll.id]: action.poll
+        [action.poll.id]: action.poll,
       }
-    default:
+    case ADD_ANSWER :
+      const { answer, id, authedUser } = action
+      const poll = state[id]
+      const votesKey = answer + 'Votes'
+
+      return {
+        ...state,
+        [action.id]: {
+          ...poll,
+          [votesKey]: poll[votesKey].concat([authedUser])
+        }
+      }
+    default :
       return state
   }
 }
